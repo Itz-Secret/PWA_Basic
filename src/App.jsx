@@ -1,18 +1,25 @@
 import { useEffect, useState } from "react";
 
 function App() {
-  const [post, setPost] = useState(null);
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
 
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/posts/1")
-      .then(res => res.json())
-      .then(data => setPost(data));
+   window.addEventListener('beforeinstallprompt',(e)=>{
+    e.preventDefault()
+        setDeferredPrompt(e)
+
+   })
   }, []);
+
+  function handleInstall(){
+    if (!deferredPrompt) return
+    deferredPrompt.prompt()
+  }
 
   return (
     <div>
-      <h1>My React PWA</h1>
-      {post ? <p>{post.title}</p> : <p>Loading...</p>}
+      <h1>My React PWA 🚀</h1>
+      {deferredPrompt && <button onClick={handleInstall}>Install App</button>}
     </div>
   );
 }
