@@ -8,24 +8,19 @@ export default defineConfig({
 VitePWA({
   registerType: 'autoUpdate',
   workbox: {
-    runtimeCaching: [
-      {
-        urlPattern: /^https:\/\/jsonplaceholder\.typicode\.com\/.*/i,  // API requests
-        handler: 'NetworkFirst',   // Try internet first, fallback to cache
-        options: {
-          cacheName: 'api-cache',
-          expiration: {
-            maxEntries: 10,
-            maxAgeSeconds: 60 * 60 * 24 // 1 day
-          }
-        }
-      },{
-        urlPattern:/^https:\/\/fonts\.googleapis\.com\/.*/i,
-        handler:'StaleWhileRevalidate',
-        options:{
-          cacheName:'fonts-cache'
-        }
-      }
+   navigateFallback:'/offline.html'
+  },
+  includeAssets:['offline.html'],
+  manifest:{
+    name:'Vite React pwa',
+    short_name:'Pwa',
+    start_url:'/',
+    background_color:'rgba(255, 0, 0, 0.53)',
+    theme_color:'rgba(170, 255, 0, 1)',
+    display:'standalone',
+    icons:[
+       { src: 'pwa-192x192.png', sizes: '192x192', type: 'image/png' },
+      { src: 'pwa-512x512.png', sizes: '512x512', type: 'image/png' }
     ]
   }
 })
