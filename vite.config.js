@@ -19,6 +19,12 @@ VitePWA({
             maxAgeSeconds: 60 * 60 * 24 // 1 day
           }
         }
+      },{
+        urlPattern:/^https:\/\/fonts\.googleapis\.com\/.*/i,
+        handler:'StaleWhileRevalidate',
+        options:{
+          cacheName:'fonts-cache'
+        }
       }
     ]
   }
